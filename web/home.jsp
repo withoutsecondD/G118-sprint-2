@@ -10,22 +10,38 @@
 <body class="d-flex align-items-center flex-column">
     <%@include file="navbar.jsp"%>
 
-    <h3></h3>
-
-    <div class="d-flex">
+    <h1 class="mt-4"><b>Welcome to BITLAB SHOP</b></h1>
+    <span class="mb-4" style="color: grey; font-size: 20px;">Electronic devices with high quality and service</span>
+    <div class="col-6 d-flex flex-column">
         <%
             List<Item> items = (List<Item>) request.getAttribute("items");
+            int rowsNumber = items.size() / 3;
+            if (items.size() % 3 != 0)
+                rowsNumber++;
+            int cardIndex = 0;
 
-            for (Item item : items) {
+            for (int i = 0; i < rowsNumber; i++) {
         %>
-        <div class="card col-4">
-            <div class="card-header"><%=item.getName()%></div>
-            <div class="card-body">
-                <h5 class="card-title">$<%=item.getPrice()%></h5>
-                <p><%=item.getDescription()%></p>
-                <a href="#" class="btn btn-primary w-100">BUY NOW</a>
+            <div class="row w-100 justify-content-between mb-4">
+                <%
+                    for (int j = cardIndex; j < cardIndex + 3; j++) {
+                        if (j == items.size())
+                            break;
+                %>
+                <div class="card shadow g-0" style="width: 30%;">
+                    <div class="card-header d-flex justify-content-center"><%=items.get(j).getName()%></div>
+                    <div class="card-body d-flex flex-column align-items-center">
+                        <h5 class="card-title" style="color: #0d6efd;">$<%=items.get(j).getPrice()%></h5>
+                        <p class="text-center"><%=items.get(j).getDescription()%></p>
+                        <a href="#" class="btn btn-primary w-100">BUY NOW</a>
+                    </div>
+                </div>
+                <%
+                    }
+
+                    cardIndex += 3;
+                %>
             </div>
-        </div>
         <%
             }
         %>
